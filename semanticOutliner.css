@@ -1,0 +1,11 @@
+/* @group Components */
+
+#semantic-outline .error {
+  color: #000000;
+}
+
+#semantic-outline .error > a {
+  color: #f00;
+}
+
+/* @end */
