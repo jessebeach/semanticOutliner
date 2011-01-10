@@ -59,7 +59,7 @@
             // H4
             if ($(this).is('h4')) {
               helpers._checkHeadings(chapter.outline, chapter.counter, 4);
-              // Increment if we have an h3 heading already
+              // Increment if we have an h4 heading already
               if (chapter.outline[chapter.counter.h1].outline[chapter.counter.h2].outline[chapter.counter.h3].outline[chapter.counter.h4]) {
                 chapter.counter.h4++;
               }
@@ -74,7 +74,7 @@
             // H5
             if ($(this).is('h5')) {
               helpers._checkHeadings(chapter.outline, chapter.counter, 5);
-              // Increment if we have an h3 heading already
+              // Increment if we have an h5 heading already
               if (chapter.outline[chapter.counter.h1].outline[chapter.counter.h2].outline[chapter.counter.h3].outline[chapter.counter.h4].outline[chapter.counter.h5]) {
                 chapter.counter.h4++;
               }
@@ -116,51 +116,19 @@
         return output;
       },
       // Check if the headings above the current heading level exist
-      _checkHeadings: function(outline, counter, level) {
-        if (level > 1) {
-          if (!outline[counter.h1]) {
-            outline[counter.h1] = {
-              text: "Missing H1",
-              outline: [],
-              css: "error"
-            }
-          }
+      _checkHeadings: function(outline, counter, level, i) {
+        if (typeof(i) === 'undefined') {
+          i = 1;
         }
-        if (level > 2) {
-          if (!outline[counter.h1].outline[counter.h2]) {
-            outline[counter.h1].outline[counter.h2] = {
-              text: "Missing H2",
+        if (level > i) {
+          if (!outline[counter['h'+i]]) {
+            outline[counter['h'+i]] = {
+              text: "Missing H"+i,
               outline: [],
               css: "error"
             }
           }
-        }
-        if (level > 3 ) {
-          if (!outline[counter.h1].outline[counter.h2].outline[counter.h3]) {
-            outline[counter.h1].outline[counter.h2].outline[counter.h3] = {
-              text: "Missing H3",
-              outline: [],
-              css: "error"
-            }
-          }
-        }
-        if (level > 4 ) {
-          if (!outline[counter.h1].outline[counter.h2].outline[counter.h3].outline[counter.h4]) {
-            outline[counter.h1].outline[counter.h2].outline[counter.h3].outline[counter.h4] = {
-              text: "Missing H4",
-              outline: [],
-              css: "error"
-            }
-          }
-        }
-        if (level > 5 ) {
-          if (!outline[counter.h1].outline[counter.h2].outline[counter.h3].outline[counter.h4].outline[counter.h5]) {
-            outline[counter.h1].outline[counter.h2].outline[counter.h3].outline[counter.h5].outline[counter.h5] = {
-              text: "Missing H5",
-              outline: [],
-              css: "error"
-            }
-          }
+          helpers._checkHeadings(outline[counter['h'+i]].outline, counter, level, ++i);
         }
       },
       _findChapters: function () {
